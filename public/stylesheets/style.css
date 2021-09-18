@@ -1,0 +1,47 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+
+}
+
+
+#winner {
+
+  width: 210px;
+  height: 125px;
+  overflow: auto;
+}
+
+.container{
+  display: inline-block;
+  margin: auto;
+
+}
+
+.card {
+
+
+  padding: 10px;
+  border: 1px solid black;
+  margin:10px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+.text{
+  float: right;
+  width: auto;
+}
+
+.text-centre{
+  text-align: center;
+}
+
+@media only screen and (min-width: 580px) {
+  .responsive {
+
+    float:left;
+  }
+
+}

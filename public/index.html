@@ -1,0 +1,100 @@
+<html xmlns="http://www.w3.org/1999/html">
+
+<head>
+  <title>Express</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div  class="card header ">
+
+      <label for="counter">New winner in: </label>
+      <div id="counter" class="text"></div>
+
+    </div>
+
+    <div class="card responsive">
+
+      <div id="winner">
+      </div>
+
+    </div>
+
+
+    <div class="card responsive text-centre">
+
+      <form onsubmit="submitForm(event)" method="post">
+        <label for="name">NAME:</label><br>
+        <input type="text" id="name" name="name" ><br>
+        <label for="number">NUMBER:</label><br>
+        <input type="number" id="number" name="number"><br><br>
+        <input type="submit">
+      </form>
+
+    </div>
+
+
+  </div>
+
+
+
+  <script type="text/javascript">
+    const source = new EventSource('/events');
+    var currentWinners = 0
+
+    source.addEventListener('message', message => {
+      //console.log('Got', message);
+
+      var data = JSON.parse(event.data)
+      var counter = parseInt(data.counter);
+
+
+
+      // Display the event data in the `content` div
+      document.getElementById("counter").innerHTML = ""+counter
+
+
+      if(currentWinners != data.winners.length)
+      {
+        document.getElementById("winner").innerHTML = "";
+        data.winners.forEach(winner => {
+          //console.log("test")
+          document.getElementById("winner").innerHTML += winner.name + '<div class="text">#'+ winner.number +'</div></br>';
+        })
+
+        currentWinners = data.winners.length;
+
+      }
+
+
+
+    });
+
+    function submitForm(e) {
+      e.preventDefault();
+
+      var http = new XMLHttpRequest();
+      http.open("POST", "/new", true);
+      http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+      //var params = "name=" + document.getElementById("name").value + ", number=" + document.getElementById("number").value
+
+      var params = JSON.stringify({
+        name: document.getElementById("name").value,
+        number: document.getElementById("number").value
+      })
+
+      http.send("data=" + params);
+      http.onload = function() {
+        console.log("added")
+      }
+    }
+
+  </script>
+
+</body>
+
+</html>
