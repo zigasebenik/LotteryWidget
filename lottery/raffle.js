@@ -18,16 +18,21 @@ setInterval(function(){
                 winners.push(user);
             }
         });
+        users.users = []
 
         while(winners.length > 5)
         {
             winners.shift();
         }
 
-        console.log(winners)
+        //console.log(winners)
+
 
         counter = 30;
     }
+
+
+
 
     if(counter == 30)
     {
